@@ -1,4 +1,4 @@
-# from pattern.en import pluralize
+from pattern.en import parsetree
 
 VERBS = ["MD", "VB", "VBZ", "VBZhas", "VBZis", "VBD", "VBG", "VBN", "VBP"]
 
@@ -128,6 +128,10 @@ def find_trigrams(essay):
 					trigrams.append([tags[i], tags[i+1], tags[i+2]])
 					
 	return trigrams
+	
+	
+def find_verbs(essay):
+	essay.parse()
 
 #
 # Returns the number of verb agreement mistakes found

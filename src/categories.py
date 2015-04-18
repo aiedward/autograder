@@ -1,0 +1,1 @@
+ALL = ["spelling", "sbj_vrb", "vrb_tense", "length"]
