@@ -1,4 +1,4 @@
-# from pattern.en import parsetree, wordnet as wn, quantify
+from pattern.en import parsetree, wordnet as wn, quantify
 
 import nltk as nl
 import re
@@ -54,34 +54,34 @@ class Score:
     
     
 class Essay:
-    def __init__(self, filename, text, real_score = 0):
-        self.text                   = text
-        self.text_list              = read_data(self.text)
-        self.tags                   = nl.pos_tag(self.text_list)
-        self.raw_score              = Score()
-        self.normalized_score       = Score()
-        self.real_score             = real_score
-        self.filename               = filename
-        self.grader_score           = 0.0
-        self.classification         = 1
-        self.classification_penalty = 0
-        
-        
-    # Calculates the weighted score for an essay
-    def calculate_score(self):
-        s = self.normalized_score
-        self.grader_score = s.spelling + s.sbj_vrb + s.vrb_tense + 2*s.sent_form + 2*s.coherence + 3*s.topic + 2*s.length
-        
-    
-    # Selects the class of the essay based on the learned cutoffs
-    def classify(self):
-        if self.grader_score > NormalizedCutoffs.total[0]:
-            self.classification += 1
-            if self.grader_score > NormalizedCutoffs.total[1]:
-                self.classification += 1
+	def __init__(self, filename, text, real_score = 0):
+		self.text                   = text
+		self.text_list              = read_data(self.text)
+		self.tags                   = nl.pos_tag(self.text_list)
+		self.raw_score              = Score()
+		self.normalized_score       = Score()
+		self.real_score             = real_score
+		self.filename               = filename
+		self.grader_score           = 0.0
+		self.classification         = 1
+		self.classification_penalty = 0
 
 
-    def output(self):
+	# Calculates the weighted score for an essay
+	def calculate_score(self):
+		s = self.normalized_score
+		self.grader_score = s.spelling + s.sbj_vrb + s.vrb_tense + 2*s.sent_form + 2*s.coherence + 3*s.topic + 2*s.length
+
+
+	# Selects the class of the essay based on the learned cutoffs
+	def classify(self):
+		if self.grader_score > NormalizedCutoffs.total[0]:
+			self.classification += 1
+		if self.grader_score > NormalizedCutoffs.total[1]:
+			self.classification += 1
+
+
+	def output(self):
 		t = self.classification 
 		
 		if t == 1:
@@ -94,66 +94,68 @@ class Essay:
 		string = self.filename + "\t" + str(self.normalized_score.spelling) + "\t" + str(self.normalized_score.sbj_vrb) + "\t" + str(self.normalized_score.vrb_tense) + "\t" + "0\t0\t0\t" + str(self.normalized_score.length) + "\tunknown\n"
 		
 		return string
-        
-        
-    # Builds a parse tree using Pattern.en
-    def parse(self):
-        self.parsetree = parsetree(self.text, relations=True)
-    
-    
-    # Sends the essay down the pipeline to calculate it's raw scores for each category
-    def pipeline(self):
-        self.raw_score.spelling  = spelling.mistakes(self)
-        self.raw_score.sbj_vrb   = sva.mistakes(self)
-        self.raw_score.length    = sentence.length(self) + verb.unique_verbs(self)
-        self.raw_score.vrb_tense = verb.mistakes(self)
-    
-    
-    # Takes an essay and scores it according to the trained cutoff points   
-    def predict(self):
-        for cat in CATEGORIES:
-            raw = getattr(self.raw_score, cat)
-            score = 1
-            
-            # Score the essay according to its cutoff level
-            if cat == "length":
-                for i, cutoff in enumerate(getattr(NormalizedCutoffs, cat)):
-                    if raw > cutoff:
-                        score += 1
-                        
-            else:
-                for i, cutoff in enumerate(getattr(NormalizedCutoffs, cat)):
-                    if raw < cutoff:
-                        score += 1
-            
-            # Store the normalized score
-            setattr(self.normalized_score, cat, score)
-        
-        # Calculate the essay's total score and classify
-        self.calculate_score()
-        self.classify()
-        
-        # Calculate mis-classification penalty
-        if self.real_score != 0 and self.real_score != self.classification:
-            self.classification_penalty = abs(self.real_score - self.classification)
-            
-    
-    # Replaces VBZ tags with VBZis or VBZhas
-    def disambiguate_vbz(self):
-        tags = map(lambda x : (x[0], 'VBZis') if x[1] == 'VBZ' and x[0] == 'is' else x, self.tags)
-        
-        self.tags_vbz = map(lambda x : (x[0], 'VBZhas') if x[1] == 'VBZ' and x[0] == 'has' else x, tags)
-        
-    
-    # Prints a summary of the essay
-    def summary(self):
-        print self.filename
-        print "Real Score: "       + str(self.real_score)
-        print "Classification: "   + str(self.classification)
-        print "Grader Score: "     + str(self.grader_score)
-        self.normalized_score._print()
 
-        
+
+	# Builds a parse tree using Pattern.en
+	def parse(self):
+		self.parsetree = parsetree(self.text, relations=True)
+
+
+	# Sends the essay down the pipeline to calculate it's raw scores for each category
+	def pipeline(self):
+		self.raw_score.spelling  = spelling.mistakes(self)
+		self.raw_score.sbj_vrb   = sva.mistakes(self)
+		self.raw_score.length    = sentence.length(self) + verb.unique_verbs(self)
+		self.raw_score.vrb_tense = verb.mistakes(self)
+		
+		return self
+
+
+	# Takes an essay and scores it according to the trained cutoff points   
+	def predict(self):
+		for cat in CATEGORIES:
+			raw = getattr(self.raw_score, cat)
+			score = 1
+
+		# Score the essay according to its cutoff level
+		if cat == "length":
+			for i, cutoff in enumerate(getattr(NormalizedCutoffs, cat)):
+				if raw > cutoff:
+					score += 1
+
+		else:
+			for i, cutoff in enumerate(getattr(NormalizedCutoffs, cat)):
+				if raw < cutoff:
+					score += 1
+
+		# Store the normalized score
+		setattr(self.normalized_score, cat, score)
+
+		# Calculate the essay's total score and classify
+		self.calculate_score()
+		self.classify()
+
+		# Calculate mis-classification penalty
+		if self.real_score != 0 and self.real_score != self.classification:
+			self.classification_penalty = abs(self.real_score - self.classification)
+
+
+	# Replaces VBZ tags with VBZis or VBZhas
+	def disambiguate_vbz(self):
+		tags = map(lambda x : (x[0], 'VBZis') if x[1] == 'VBZ' and x[0] == 'is' else x, self.tags)
+
+		self.tags_vbz = map(lambda x : (x[0], 'VBZhas') if x[1] == 'VBZ' and x[0] == 'has' else x, tags)
+
+
+	# Prints a summary of the essay
+	def summary(self):
+		print self.filename
+		print "Real Score: "       + str(self.real_score)
+		print "Classification: "   + str(self.classification)
+		print "Grader Score: "     + str(self.grader_score)
+		self.normalized_score._print()
+
+
 ##
 ###########################################
 # Module Functions
@@ -166,7 +168,6 @@ def find_cutoffs(essays):
     scores.sort()
     
     NormalizedCutoffs.total = quantiles.find(scores, [0.33, 0.66])
-    # print "Cutoffs for Low-Med and Med-High: " + str(NormalizedCutoffs.total)
     
     
 def print_cutoffs():
@@ -202,7 +203,7 @@ def restore_cutoffs():
 # Learns the cutoff weights for each category and calculates each essays score
 def train(save = True):
     # Read all essays training essays into memory
-    essays = read_in_essays("training")
+    essays = read_in_essays(training = True)
     
     # Send each essay through the pipeline to prepare for grading
     for essay in essays:
@@ -224,15 +225,14 @@ def train(save = True):
 
 # Given a single filepath to an essay, prints the score according to a trained model
 def test():
-	essays = read_in_essays("test")
+	essays = read_in_essays(training = False)
 	
 	restore_cutoffs()
 	
 	output = []
 	
 	for essay in essays:
-		essay.pipeline()
-		essay.predict()
+		essay.pipeline().predict()
 		output.append(essay.output())
 	
 	new_output	= ""
@@ -242,38 +242,34 @@ def test():
 	file = open("output/results.txt", "w+")
 	file.write(str(new_output))
 	file.close
-    
+
 
 # Reads in a tokenized string and converts it into a list of tokens
 def read_data(textfile):
-    read_data = textfile
-    read_data = read_data.replace('\n'," ") #add space to newline
-    read_data = read_data.split()
-    return(read_data)
-    
+	return textfile.replace('\n'," ").split()
+
 
 # Converts a file to a string
 def file_to_string(filename):
-    with open(filename, "r") as f:
-        return f.read()
-    
+	with open(filename, "r") as f:
+		return f.read()
+
 
 # Reads in essays for high, medium, and low classes
-def read_in_essays(type = "training"):
-	all_essays = []
+def read_in_essays(training = True, cwd = ""):
+	type = "training" if training else "test"
 	
-	if type == "training":		
-		high_filenames = glob.glob("input/" + type + "/high/*.txt")
-		med_filenames  = glob.glob("input/" + type + "/medium/*.txt")
-		low_filenames  = glob.glob("input/" + type + "/low/*.txt")
-		high_essays = map(lambda x : Essay(x, file_to_string(x), 3), high_filenames)
-		med_essays  = map(lambda x : Essay(x, file_to_string(x), 2), med_filenames)
-		low_essays  = map(lambda x : Essay(x, file_to_string(x), 1), low_filenames)
-		
-		all_essays = high_essays + med_essays + low_essays
+	essays = []
+	
+	if type == "training":
+		for i, score in enumerate(["low", "medium", "high"]):
+			filenames = glob.glob(cwd + "input/" + type + "/" + score + "/*.txt")
+			essays.extend( map(lambda x : Essay(x, file_to_string(x), i+1), filenames) )
 		
 	else:
 		filenames  = glob.glob("input/" + type + "/tokenized/*.txt")
-		all_essays = map(lambda x : Essay(x, file_to_string(x), 1), filenames)
+		essays = map(lambda x : Essay(x, file_to_string(x), 1), filenames)
+		
+	print "Read in " + str(len(essays)) + " essays from " + type + " data"
 	
-	return all_essays
+	return essays
