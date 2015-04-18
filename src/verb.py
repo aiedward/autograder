@@ -1,87 +1,17 @@
 from pattern.en import parsetree
 
-VERBS = ["MD", "VB", "VBZ", "VBZhas", "VBZis", "VBD", "VBG", "VBN", "VBP"]
-
-PAST    = ["VBD", "VBN"]
-PRESENT = ["VBZ", "VBP"]
-FUTURE  = ["VBG"]
-
-VERB_BIGRAM_RULES = [
-	"VBD,VBG",
-	"VBD,VBP",
-	"MD,VBZis",
-	"MD,VBZhas",
-	"MD,VBD",
-	"MD,VBN",
-	"MD,VBG",
-	"MD,VBP",
-	"VBP,VBP",
-	"MD,MD",
-	"MD,VBZis",
-	"MD,VBZhas",
-	"VB,MD",
-	"VB,VBZis",
-	"VB,VBZhas",
-	"VBD,MD",
-	"VBZis,MD",
-	"VBZhas,MD",
-	"VBP,MD",
-	"VBN,MD",
-	"VBN,JJ",
-	"VBZ,VB",
-	"VBZis,VBZis",
-	"VBZis,VB",
-	"VBZis,VBP",
-	"VBZis,VBD",
-	"VBZhas,VBZhas",
-	"VBZhas,VBZis",
-	"VBZhas,VB",
-	"VBZhas,VBP",
-	"VBZhas,VBD",
-	"VBZhas,VBG",
-	"WDT,VBN"
-]
-
-VERB_TRIGRAM_RULES = [
-	"MD,VB,VBD",
-	"MD,VB,VBG",
-	"MD,VB,VBP",
-	"MD,VB,VBZ",
-	"MD,VB,VB",
-	"MD,VB,VBZis",
-	"MD,VB,VBZhas",
-	"MD,VBZhas,VBN",
-	"MD,VBZhas,VB",
-	"MD,VBZhas,VBD",
-	"MD,VBZhas,VBN",
-	"MD,VBZhas,VBP",
-	"MD,VBZhas,VBZhas",
-	"MD,VBZis,VBN",
-	"MD,VBZis,VB",
-	"MD,VBZis,VBD",
-	"MD,VBZis,VBN",
-	"MD,VBZis,VBP",
-	"MD,VBZis,VBZis",
-	"MD,VBN,VBN",
-	"MD,VBN,VB",
-	"MD,VBN,VBD",
-	"MD,VBN,VBN",
-	"MD,VBN,VBP",
-	"MD,VBN,VBZis",
-	"MD,VBN,VBZhas"
-]
-
+import rules
 
 #
 # Returns true if a tag is a verb
 def is_verb(tag):
-	return True if tag in VERBS else False
+	return True if tag in rules.VERBS else False
 	
 	
 #
 # Returns the number of unique verbs in an essay
 def unique_verbs(essay):
-	unique_verbs = filter(lambda x : True if x[1] in VERBS else False, essay.tags)
+	unique_verbs = filter(lambda x : True if x[1] in rules.VERBS else False, essay.tags)
 	
 	return len(set(map(lambda x : x[0], unique_verbs)))
 
@@ -143,11 +73,11 @@ def mistakes(essay):
 	errors   = 0.0
 	
 	for bigram in bigrams:
-		if ",".join(map(lambda x : x[1], bigram)) in VERB_BIGRAM_RULES: 
+		if ",".join(map(lambda x : x[1], bigram)) in rules.VERB_BIGRAM_RULES: 
 			errors += 1
 		
 	for trigram in trigrams:
-		if ",".join(map(lambda x : x[1], trigram)) in VERB_TRIGRAM_RULES:
+		if ",".join(map(lambda x : x[1], trigram)) in rules.VERB_TRIGRAM_RULES:
 			errors += 1
 	
 	return errors / (len(bigrams) + len(trigrams))
