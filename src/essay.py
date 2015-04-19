@@ -1,4 +1,5 @@
 from score import NormalizedCutoffs, Score
+from pattern.en import parsetree, wordnet as wn, quantify
 
 import nltk as nl
 import spelling
@@ -34,8 +35,16 @@ class Essay:
 			self.classification += 1
 		if self.grader_score > NormalizedCutoffs.total[1]:
 			self.classification += 1
+			
+	
+	# Replaces VBZ tags with VBZis or VBZhas
+	def disambiguate_vbz(self):
+		tags = map(lambda x : (x[0], 'VBZis') if x[1] == 'VBZ' and x[0] == 'is' else x, self.tags)
+
+		self.tags_vbz = map(lambda x : (x[0], 'VBZhas') if x[1] == 'VBZ' and x[0] == 'has' else x, tags)
 
 
+	# Returns a string formatted for the competition
 	def output(self):
 		t = self.classification 
 		
@@ -94,13 +103,6 @@ class Essay:
 		# Calculate mis-classification penalty
 		if self.real_score != 0 and self.real_score != self.classification:
 			self.classification_penalty = abs(self.real_score - self.classification)
-
-
-	# Replaces VBZ tags with VBZis or VBZhas
-	def disambiguate_vbz(self):
-		tags = map(lambda x : (x[0], 'VBZis') if x[1] == 'VBZ' and x[0] == 'is' else x, self.tags)
-
-		self.tags_vbz = map(lambda x : (x[0], 'VBZhas') if x[1] == 'VBZ' and x[0] == 'has' else x, tags)
 
 
 	# Prints a summary of the essay

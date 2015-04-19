@@ -1,0 +1,61 @@
+---
+title: "Project 1 for CS421 - University of Illinois at Chicago"
+author: "Jordan Williams jwill49@uic.edu and Jason Deutsch jdeuts4@uic.edu"
+date: "April 17, 2015"
+output: pdf_document
+---
+
+##SETUP
+
+For our project we are using NLTK and Pyenchant. The input requires tokenized text.
+
+Run make to install the necessary packages and to test the data. 
+NOTE: The NLTK POS tagger requires a couple of corpora to be installed as well. You will get an error if they are not.
+
+##TECHNIQUE
+		
+For spelling, we counted the number of words that did not appear in the pyenchant dictionary divided by the wordcount.
+
+For subject-verb agreement, we made a list of violating rules and counted the occurrences of such rules in the essay divided by the number of tags.
+
+For verb tense agreement, we used a similar process for subject-verb agreement.
+
+For length, we noticed a strong correlation between the number of unique verbs and the overall essay score so added that as a factor for the essay length along with the number of unique POS tags and the number of sentences.
+
+
+For complete rule definitions see:
+	- Spelling:     ---> spelling.py ---> pyenchant
+	- Subject-Verb: ---> subjectVerbAgreement.py
+	- Verb Tense:   ---> verb.py
+	- Length:       ---> sentence.py and verb.py
+
+	
+###Score Calculation
+		We have learned the cutoff points for each category based on our training data. The model is loaded automatically into the program by calling test.
+		
+		- Spelling:     ---> [0.09375, 0.05649717514124294, 0.04184100418410042, 0.03389830508474576]
+		- Subject-Verb: ---> [0.012853470437017995, 0.010554089709762533, 0.0055248618784530384, 0.0030864197530864196]
+		- Verb Tense:   ---> [2, 1]
+		- Length:       ---> [52.2, 64.9, 71.8, 81.8]
+		
+		- Overall Grade ---> [10.833333333333332, 15.333333333333332]
+		
+		
+##TODO
+
+For the second part we will exploit the parsers to find errors in the sentences.
+We can see for instance how many fragments were recorded in the parser divided by the total 
+number of sentences. We will also analyze parsed sentences that have SBAR in them and check
+whether the sentence is correct or not, possibly by using some rules defined with the POS tagger.
+
+We will evaluate the strenghts and weakness of different parsers (py stat parser, NLTK, pattern.en etc.)
+We will also look at a POS tagger using conditional random fields.
+
+For text coherence we will some sort of refrence expression (refrence resolution). We may also
+use a chunker for additional aid to differentiate between coherent and non-coherenet sentences.
+
+To see if the essay addresses the topic, we can look at how many expressions include words that 
+are related to cars. Examples could be, fuel, gasoline, pollution, parking, cars, etc. 
+
+		
+		

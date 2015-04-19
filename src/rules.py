@@ -1,7 +1,7 @@
 VERBS = ["MD", "VB", "VBZ", "VBZhas", "VBZis", "VBD", "VBG", "VBN", "VBP"]
 
-PAST    = ["VBD", "VBN"]
-PRESENT = ["VBZ", "VBP"]
+PAST    = ["VBD", "VBN", "VBZhas"]
+PRESENT = ["VBZ", "VBP", "VBZis"]
 FUTURE  = ["VBG"]
 
 VERB_BIGRAM_RULES = [
@@ -67,4 +67,15 @@ VERB_TRIGRAM_RULES = [
 	"MD,VBN,VBP",
 	"MD,VBN,VBZis",
 	"MD,VBN,VBZhas"
+]
+
+FUTURE_INDICATORS = [
+	"will",
+	"might",
+	"may"
+]
+
+PAST_INDICATORS = [
+	"was",
+	"were"
 ]

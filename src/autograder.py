@@ -1,4 +1,3 @@
-from pattern.en import parsetree, wordnet as wn, quantify
 from score import NormalizedCutoffs, Score
 from essay import Essay
 
@@ -96,7 +95,7 @@ def file_to_string(filename):
 
 
 # Reads in essays for high, medium, and low classes
-def read_in_essays(training = True, cwd = ""):
+def read_in_essays(training = True, cwd = "", debug = False):
 	type = "training" if training else "test"
 	
 	essays = []
@@ -112,4 +111,4 @@ def read_in_essays(training = True, cwd = ""):
 		
 	print "Read in " + str(len(essays)) + " essays from " + type + " data"
 	
-	return essays
+	return essays[0] if debug else essays
