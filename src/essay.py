@@ -55,7 +55,7 @@ class Essay:
 		else:
 			grade = "high"
 			
-		string = self.filename + "\t" + str(self.normalized_score.spelling) + "\t" + str(self.normalized_score.sbj_vrb) + "\t" + str(self.normalized_score.vrb_tense) + "\t" + "0\t0\t0\t" + str(self.normalized_score.length) + "\tunknown\n"
+		string = self.filename + "\t" + str(self.normalized_score.spelling) + "\t" + str(self.normalized_score.sbj_vrb) + "\t" + str(self.normalized_score.vrb_tense) + "\t" + "0\t0\t0\t" + str(self.normalized_score.length) + "\t" + grade + "\n"
 		
 		return string
 

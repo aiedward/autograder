@@ -95,7 +95,7 @@ def file_to_string(filename):
 
 
 # Reads in essays for high, medium, and low classes
-def read_in_essays(training = True, cwd = "", debug = False):
+def read_in_essays(training=True, cwd="", debug=False):
 	type = "training" if training else "test"
 	
 	essays = []

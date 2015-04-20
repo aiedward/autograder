@@ -1,8 +1,30 @@
-VERBS = ["MD", "VB", "VBZ", "VBZhas", "VBZis", "VBD", "VBG", "VBN", "VBP"]
+VERBS = [
+	"MD",
+	"VB",
+	"VBZ",
+	"VBZhas",
+	"VBZis",
+	"VBD",
+	"VBG",
+	"VBN",
+	"VBP"
+]
 
-PAST    = ["VBD", "VBN", "VBZhas"]
-PRESENT = ["VBZ", "VBP", "VBZis"]
-FUTURE  = ["VBG"]
+PAST    = [
+	"VBD",
+	"VBN",
+	"VBZhas"
+]
+
+PRESENT = [
+	"VBZ",
+	"VBP",
+	"VBZis"
+]
+
+FUTURE  = [
+	# "VBG"
+]
 
 VERB_BIGRAM_RULES = [
 	"VBD,VBG",
@@ -75,7 +97,16 @@ FUTURE_INDICATORS = [
 	"may"
 ]
 
+PRESENT_INDICATORS = [
+	"is",
+	"do",
+	"does",
+	"are"
+]
+
 PAST_INDICATORS = [
 	"was",
-	"were"
+	"were",
+	"did",
+	"had"
 ]

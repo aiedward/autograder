@@ -1,3 +1,3 @@
 import autograder as ag
-# ag.train(False)
+# ag.train(save = True)
 ag.test()
