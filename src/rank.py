@@ -1,3 +1,5 @@
+""" Maintained by Jordan Williams """
+
 from math import floor
 import quantiles
 

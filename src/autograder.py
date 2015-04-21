@@ -1,3 +1,5 @@
+""" Maintained by Jordan Williams"""
+
 from score import NormalizedCutoffs, Score
 from essay import Essay
 
@@ -13,9 +15,13 @@ def find_cutoffs(essays):
     
     NormalizedCutoffs.total = quantiles.find(scores, [0.33, 0.66])
     
+    return None
+    
     
 def print_cutoffs():
     NormalizedCutoffs._print(NormalizedCutoffs)
+    
+    return None
     
 
 # Saves the learned cutoff values in "cutoffs.txt"
@@ -29,6 +35,8 @@ def save_cutoffs():
         
     file.close()
     
+    return None
+    
 
 # Restores the cutoffs learned for our model in "cutoffs.txt"
 def restore_cutoffs():
@@ -41,6 +49,8 @@ def restore_cutoffs():
         setattr(NormalizedCutoffs, cat, cutoffs_list)
         
     file.close()
+    
+    return None
     
 
     
@@ -86,6 +96,10 @@ def test():
 	file = open("output/results.txt", "w+")
 	file.write(str(new_output))
 	file.close
+	
+	print "See output/results.txt for classification predictions"
+	
+	return None
 
 
 # Converts a file to a string

@@ -1,15 +1,17 @@
-""" Contractions taken from http://www.enchantedlearning.com/grammar/contractions/list.shtml """
+""" 
+Maintained by Jordan Williams
+
+Contractions taken from http://www.enchantedlearning.com/grammar/contractions/list.shtml 
+"""
 
 def convert(word):
-	be = filter(lambda y : y is not None, map(lambda x : x[1] if x[0] == word else None, BE))
-	will = filter(lambda y : y is not None, map(lambda x : x[1] if x[0] == word else None, WILL))
-	# would = filter(lambda y : y is not None, map(lambda x : x[1] if x[0] == word else None, WOULD))
-	have = filter(lambda y : y is not None, map(lambda x : x[1] if x[0] == word else None, HAVE))
-	# had = filter(lambda y : y is not None, map(lambda x : x[1] if x[0] == word else None, HAD))
-	not_ = filter(lambda y : y is not None, map(lambda x : x[1] if x[0] == word else None, NOT))
+	words_wo_contraction = []
+	
+	for contraction_rule in ["BE", "WILL", "HAVE", "NOT"]:
+		words_wo_contraction.extend(filter(lambda y : y is not None, map(lambda x : x[1] if x[0] == word else None, contraction_rule)))
 	
 	try:
-		return be.extend(will).extend(have).extend(not_)[0]
+		return words_wo_contraction[0]
 	except(IndexError):
 		return word
 

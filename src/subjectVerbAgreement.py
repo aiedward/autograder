@@ -1,3 +1,5 @@
+""" Maintained by Jason Duetsch """
+
 def mistakes(essay_obj):
 	tags = [] 
 	whole_tags = essay_obj.tags

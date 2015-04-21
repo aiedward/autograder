@@ -1,3 +1,5 @@
+""" Maintained by Jordan Williams """
+
 VERBS = [
 	"MD",
 	"VB",

@@ -1,3 +1,7 @@
+""" Maintained by Jason Duetsch """
+
+import verb
+
 def length(essay_obj):
     #number of unique tags    
     tags = essay_obj.tags
@@ -9,4 +13,4 @@ def length(essay_obj):
         if tags[i][1] == '.':
             total_sentences += 1
               
-    return total_sentences + 0.1 * num_unique_tags
+    return (total_sentences + 0.1 * num_unique_tags) + verb.unique_verbs(essay_obj)

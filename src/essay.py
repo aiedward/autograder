@@ -1,3 +1,5 @@
+""" Maintained by Jordan Williams"""
+
 from score import NormalizedCutoffs, Score
 from pattern.en import parsetree, wordnet as wn, quantify
 
@@ -27,6 +29,8 @@ class Essay:
 	def calculate_score(self):
 		s = self.normalized_score
 		self.grader_score = s.spelling + s.sbj_vrb + s.vrb_tense + 2*s.sent_form + 2*s.coherence + 3*s.topic + 2*s.length
+		
+		return None
 
 
 	# Selects the class of the essay based on the learned cutoffs
@@ -36,12 +40,16 @@ class Essay:
 		if self.grader_score > NormalizedCutoffs.total[1]:
 			self.classification += 1
 			
+		return None
+			
 	
 	# Replaces VBZ tags with VBZis or VBZhas
 	def disambiguate_vbz(self):
 		tags = map(lambda x : (x[0], 'VBZis') if x[1] == 'VBZ' and x[0] == 'is' else x, self.tags)
 
 		self.tags_vbz = map(lambda x : (x[0], 'VBZhas') if x[1] == 'VBZ' and x[0] == 'has' else x, tags)
+		
+		return None
 
 
 	# Returns a string formatted for the competition
@@ -63,17 +71,21 @@ class Essay:
 	# Builds a parse tree using Pattern.en
 	def parse(self):
 		self.parsetree = parsetree(self.text, relations=True)
+		
+		return None
 
 
 	# Sends the essay down the pipeline to calculate it's raw scores for each category
 	def pipeline(self):
 		self.raw_score.spelling  = spelling.mistakes(self)
 		self.raw_score.sbj_vrb   = sva.mistakes(self)
-		self.raw_score.length    = sentence.length(self) + verb.unique_verbs(self)
+		self.raw_score.length    = sentence.length(self)
 		self.raw_score.vrb_tense = verb.mistakes(self)
 		
 		# Now predict
 		self.predict()
+		
+		return None
 
 
 	# Takes an essay and scores it according to the trained cutoff points   
@@ -103,6 +115,8 @@ class Essay:
 		# Calculate mis-classification penalty
 		if self.real_score != 0 and self.real_score != self.classification:
 			self.classification_penalty = abs(self.real_score - self.classification)
+			
+		return None
 
 
 	# Prints a summary of the essay
@@ -112,3 +126,5 @@ class Essay:
 		print "Classification: "   + str(self.classification)
 		print "Grader Score: "     + str(self.grader_score)
 		self.normalized_score._print()
+		
+		return None

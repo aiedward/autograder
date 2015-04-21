@@ -1,3 +1,5 @@
+""" Maintained by Jordan Williams """
+
 from pattern.en import tenses as tn, suggest, PRESENT, PAST, FUTURE
 
 import rules

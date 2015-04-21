@@ -1,3 +1,5 @@
+""" Maintained by Jordan Williams """
+
 class NormalizedCutoffs:
 	spelling  = [0,0,0,0]
 	sbj_vrb   = [0,0,0,0]
@@ -11,6 +13,8 @@ class NormalizedCutoffs:
 		print "Verb Tense: "             + str(self.vrb_tense)
 		print "Length: "                 + str(self.length)
 		print "Total: "                  + str(self.total)
+		
+		return None
 
 class Score:
 	spelling  = 0.0
@@ -30,3 +34,5 @@ class Score:
 		# print "Coherence: "              + str(self.coherence)
 		# print "Topic: "                  + str(self.topic)
 		print "Length: "                 + str(self.length)
+		
+		return None

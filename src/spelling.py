@@ -1,3 +1,5 @@
+""" Maintained by Jason Duetsch """
+
 import enchant #for spell check, nltk wordnet says words like "how" are misspelled
 
 def mistakes(essay_obj):
