@@ -112,6 +112,8 @@ def file_to_string(filename):
 def read_in_essays(training=True, cwd="", debug=False):
 	type = "training" if training else "test"
 	
+	print "Reading in essays from " + type + " data"
+	
 	essays = []
 	
 	if type == "training":
@@ -123,6 +125,6 @@ def read_in_essays(training=True, cwd="", debug=False):
 		filenames  = glob.glob("input/" + type + "/tokenized/*.txt")
 		essays = map(lambda x : Essay(x, file_to_string(x), 1), filenames)
 		
-	print "Read in " + str(len(essays)) + " essays from " + type + " data"
+	print str(len(essays)) + " essays read from " + type + " data"
 	
 	return essays[0] if debug else essays

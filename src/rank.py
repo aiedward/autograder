@@ -17,7 +17,7 @@ def normalize(essays, attribute):
 	# Sort the essays by the given attribute in ASC order unless we are ranking length
 	essays.sort(key = lambda a : getattr(a.raw_score, attribute), reverse = True)
 	
-	if attribute == "length":
+	if attribute == "length" or attribute == "topic":
 		essays.reverse()
 		
 	for i, essay in enumerate(essays):

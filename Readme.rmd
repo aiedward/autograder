@@ -1,13 +1,13 @@
 ---
 title: "Project 1 for CS421 - University of Illinois at Chicago"
 author: "Jordan Williams jwill49@uic.edu and Jason Deutsch jdeuts4@uic.edu"
-date: "April 17, 2015"
+date: "April 27, 2015"
 output: pdf_document
 ---
 
 ##SETUP
 
-For our project we are using NLTK and Pyenchant. The input requires tokenized text.
+For our project we are using Python 2.7, NLTK and Pyenchant. The input requires tokenized text.
 
 Run make to install the necessary packages and to test the data. 
 NOTE: The NLTK POS tagger requires a couple of corpora to be installed as well. You will get an error if they are not.
@@ -27,18 +27,20 @@ For complete rule definitions see:
 	- Spelling:     ---> spelling.py ---> pyenchant
 	- Subject-Verb: ---> subjectVerbAgreement.py
 	- Verb Tense:   ---> verb.py
+  - Topic         ---> topicCoherence.py
 	- Length:       ---> sentence.py and verb.py
 
 	
 ###Score Calculation
 		We have learned the cutoff points for each category based on our training data. The model is loaded automatically into the program by calling test.
 		
-		- Spelling:     ---> [0.09375, 0.05649717514124294, 0.04184100418410042, 0.03389830508474576]
-		- Subject-Verb: ---> [0.012853470437017995, 0.010554089709762533, 0.0055248618784530384, 0.0030864197530864196]
-		- Verb Tense:   ---> [2, 1]
+		- Spelling:     ---> [0.09375, 0.05649717514124294, 0.04184100418410042, 0.029850746268656716]
+		- Subject-Verb: ---> [0.009852216748768473, 0.007874015748031496, 0.005141388174807198, 0.0028328611898017]
+		- Verb Tense:   ---> [0.18181818181818182, 0.125, 0.1, 0.058823529411764705]
+    - Topic         ---> [0.006493506493506494, 0.01141552511415525, 0.014577259475218658, 0.01948051948051948]
 		- Length:       ---> [52.2, 64.9, 71.8, 81.8]
 		
-		- Overall Grade ---> [10.833333333333332, 15.333333333333332]
+		- Overall Grade ---> [16.333333333333332, 24.333333333333332]
 		
 		
 ##TODO

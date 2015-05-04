@@ -16,8 +16,8 @@ def compute_tense_similarity_errors(essay):
 	tense_tuples = map(lambda x : tense_of_sentence(x), sentence_vp_chunks)
 	
 	# If any sentence contains PAST, PRESENT, and FUTURE tenses, it is an error
-	errors = reduce(lambda x,y : x+y, map(lambda z : 1.0 if z[0] > 0 and z[1] > 0 and z[2] > 0 else 0.0, tense_tuples))
-		
+	errors = reduce(lambda x,y : x+y, map(lambda z : 1.0 if z[0] > 0 and z[1] > 0 and z[2] > 0 else 0.0, tense_tuples)) / len(sentences)
+	
 	return errors
 
 

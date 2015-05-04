@@ -9,6 +9,8 @@ import subjectVerbAgreement as sva
 import sentence
 import verb
 import categories
+import sentenceFormation
+import topicCoherence
 
 
 class Essay:
@@ -63,7 +65,7 @@ class Essay:
 		else:
 			grade = "high"
 			
-		string = self.filename + "\t" + str(self.normalized_score.spelling) + "\t" + str(self.normalized_score.sbj_vrb) + "\t" + str(self.normalized_score.vrb_tense) + "\t" + "0\t0\t0\t" + str(self.normalized_score.length) + "\t" + grade + "\n"
+		string = self.filename + "\t" + str(self.normalized_score.spelling) + "\t" + str(self.normalized_score.sbj_vrb) + "\t" + str(self.normalized_score.vrb_tense) + "\t" + "0\t0\t" + str(self.normalized_score.topic) + "\t" + str(self.normalized_score.length) + "\t" + grade + "\n"
 		
 		return string
 
@@ -77,10 +79,14 @@ class Essay:
 
 	# Sends the essay down the pipeline to calculate it's raw scores for each category
 	def pipeline(self):
+		print "Processing " + self.filename
+		
 		self.raw_score.spelling  = spelling.mistakes(self)
 		self.raw_score.sbj_vrb   = sva.mistakes(self)
 		self.raw_score.length    = sentence.length(self)
 		self.raw_score.vrb_tense = verb.mistakes(self)
+		self.raw_score.sent_form = sentenceFormation.mistakes(self)
+		self.raw_score.topic     = topicCoherence.score(self)
 		
 		# Now predict
 		self.predict()
@@ -95,7 +101,7 @@ class Essay:
 			score = 1
 
 			# Score the essay according to its cutoff level
-			if cat == "length":
+			if cat == "length" or cat == "topic":
 				for i, cutoff in enumerate(getattr(NormalizedCutoffs, cat)):
 					if raw > cutoff:
 						score += 1
