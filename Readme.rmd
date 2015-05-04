@@ -7,7 +7,13 @@ output: pdf_document
 
 ##SETUP
 
-For our project we are using Python 2.7, NLTK and Pyenchant. The input requires tokenized text.
+For our project we are using Python 2.7, NLTK and Pyenchant. We are also using the Stanford Parser which requires JRE 1.8. 
+
+__Please update src/stanfordParser.py__ with the correct java path.
+
+__Additionally, please add stanford-parser-3.5.2-models.jar to lib/__
+
+The input requires tokenized text.
 
 Run make to install the necessary packages and to test the data. 
 NOTE: The NLTK POS tagger requires a couple of corpora to be installed as well. You will get an error if they are not.
