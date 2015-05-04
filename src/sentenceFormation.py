@@ -1,9 +1,5 @@
-import os
+import stanfordParser
 from nltk.parse import stanford
-os.environ['JAVAHOME'] = '/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java'
-os.environ['JAVA_HOME'] = '/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java'
-os.environ['STANFORD_PARSER'] = 'lib'
-os.environ['STANFORD_MODELS'] = 'lib'
 
 """
 Returns the percentage of incomplete sentences.
@@ -22,6 +18,7 @@ ROOT ->
 
 """
 def mistakes(essay):
+    
     number_of_fragments(essay)
     return 0
 
