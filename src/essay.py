@@ -11,6 +11,7 @@ import verb
 import categories
 import sentenceFormation
 import topicCoherence
+import centering
 
 
 class Essay:
@@ -65,7 +66,7 @@ class Essay:
 		else:
 			grade = "high"
 			
-		string = self.filename + "\t" + str(self.normalized_score.spelling) + "\t" + str(self.normalized_score.sbj_vrb) + "\t" + str(self.normalized_score.vrb_tense) + "\t" + "0\t0\t" + str(self.normalized_score.topic) + "\t" + str(self.normalized_score.length) + "\t" + grade + "\n"
+		string = self.filename + "\t" + str(self.normalized_score.spelling) + "\t" + str(self.normalized_score.sbj_vrb) + "\t" + str(self.normalized_score.vrb_tense) + "\t" + str(self.normalized_score.sent_form) + "\t" + str(self.normalized_score.anaphora) + "\t" + str(self.normalized_score.topic) + "\t" + str(self.normalized_score.length) + "\t" + grade + "\n"
 		
 		return string
 
@@ -86,6 +87,7 @@ class Essay:
 		self.raw_score.length    = sentence.length(self)
 		self.raw_score.vrb_tense = verb.mistakes(self)
 		self.raw_score.sent_form = sentenceFormation.mistakes(self)
+		self.raw_score.anaphora  = centering.compute_ambiguity(self)
 		self.raw_score.topic     = topicCoherence.score(self)
 		
 		# Now predict

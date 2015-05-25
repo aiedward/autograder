@@ -112,3 +112,39 @@ PAST_INDICATORS = [
 	"did",
 	"had"
 ]
+
+PRONOUN_TAGS = [
+    "PRP",
+    "PRP$"
+]
+
+PRONOUN_GENDER = [
+    "she",
+    "her",
+    "he",
+    "him"
+]
+
+PRONOUN_IGNORE = [
+    "i",
+    "you",
+    "me",
+    "mine",
+    "my",
+    "we",
+    "our",
+    "your",
+    "us",
+    "drive",
+    "Drive"
+]
+
+PRONOUN_PLURAL = [
+    "they",
+    "them",
+    "people"
+]
+
+PRONOUN_SINGULAR = [
+    "its"
+]

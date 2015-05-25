@@ -13,24 +13,81 @@ def score(essay):
     tags2=str(tags)
     
     
-    pollution = 0.0
-    pollution+=tags2.count('pollution')
-    pollution+=tags2.count('Pollution')
-    pollution+=tags2.count('polluting')
-    pollution+=tags2.count('Polluting')
-    pollution+=tags2.count('pollutes')
-    pollution+=tags2.count('Pollutes')
-    pollution+=tags2.count('Polluted')
-    pollution+=tags2.count('polluted')
+    num_sentences = tags2.count('.')
+
+    relevent_word_count = 0.0
     
-    score1 = pollution/len(whole_tags)
+    #country category    
+    relevent_word_count+=tags2.count('Country')
+    relevent_word_count+=tags2.count('Countries')
+    relevent_word_count+=tags2.count('Developed')
+    relevent_word_count+=tags2.count('Developing')
     
-    more_less = 0.0
-    more_less+=tags2.count('more')
-    more_less+=tags2.count('More')
-    more_less+=tags2.count('less')
-    more_less+=tags2.count('Less')
+    relevent_word_count+=tags2.count('country')
+    relevent_word_count+=tags2.count('countries')
+    relevent_word_count+=tags2.count('developed')
+    relevent_word_count+=tags2.count('developing')
     
-    score2 = more_less/len(whole_tags)
+    #more/less category
+    relevent_word_count+=tags2.count('more')
+    relevent_word_count+=tags2.count('More')
+    relevent_word_count+=tags2.count('less')
+    relevent_word_count+=tags2.count('Less')
     
-    return(score1+score2)
+    #road category
+    relevent_word_count+=tags2.count('road')
+    relevent_word_count+=tags2.count('Road')
+    relevent_word_count+=tags2.count('Roads')
+    relevent_word_count+=tags2.count('roads')
+    relevent_word_count+=tags2.count('highway')
+    relevent_word_count+=tags2.count('Highways')
+    relevent_word_count+=tags2.count('Highway')
+    relevent_word_count+=tags2.count('highways')
+    
+    #pollution category
+    relevent_word_count+=tags2.count('pollution')
+    relevent_word_count+=tags2.count('Pollution')
+    relevent_word_count+=tags2.count('polluting')
+    relevent_word_count+=tags2.count('Polluting')
+    relevent_word_count+=tags2.count('pollutes')
+    relevent_word_count+=tags2.count('Pollutes')
+    relevent_word_count+=tags2.count('Polluted')
+    relevent_word_count+=tags2.count('polluted')
+    
+    #future category
+    relevent_word_count+=tags2.count('future')
+    relevent_word_count+=tags2.count('Future')
+    
+    #oil category
+    relevent_word_count+=tags2.count('oil')
+    relevent_word_count+=tags2.count('Oil')
+    relevent_word_count+=tags2.count('petroleum')
+    relevent_word_count+=tags2.count('Petroleum')
+    relevent_word_count+=tags2.count('petrol')
+    relevent_word_count+=tags2.count('Petrol')
+    relevent_word_count+=tags2.count('gasoline')
+    relevent_word_count+=tags2.count('Gasoline')
+    relevent_word_count+=tags2.count('gas')
+    relevent_word_count+=tags2.count('Gas')
+    
+    #cars category
+    
+    relevent_word_count+=tags2.count('cars')
+    relevent_word_count+=tags2.count('Cars')
+    relevent_word_count+=tags2.count('car')
+    relevent_word_count+=tags2.count('car')
+    relevent_word_count+=tags2.count('vehicle')
+    relevent_word_count+=tags2.count('Vehicle')
+    relevent_word_count+=tags2.count('vehicles')
+    relevent_word_count+=tags2.count('Vehicles')
+    relevent_word_count+=tags2.count('auto')
+    relevent_word_count+=tags2.count('Auto')
+    relevent_word_count+=tags2.count('automobile')
+    relevent_word_count+=tags2.count('Automobile')
+    relevent_word_count+=tags2.count('Automobiles')
+    relevent_word_count+=tags2.count('automobiles')
+    
+    if num_sentences == 0:
+        return relevent_word_count/(len(whole_tags))
+    
+    return(relevent_word_count/num_sentences)
